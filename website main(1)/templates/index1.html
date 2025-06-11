@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribble Sense</title>
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/icon.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        body {
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #F1FADA;
+                color: #265073;
+        }
+        .header {
+            background-color: #265073;
+            color: #fff;
+            padding: 5px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 10%;
+        }
+
+        .header nav a {
+            color: #9AD0C2;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+
+        h6{
+            text-align: right;
+            
+        }
+
+        .main {
+            padding: 50px;
+            background-color: #F1FADA;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .hero-2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-2 h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero-2 p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        h2{
+            font-weight: bold;
+            text-align: center;
+        }
+        .footer {
+            background-color: #333;
+            color: #9AD0C2;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card {
+            /* width: 100%;
+            min-height: 100vh; */
+            /* background: linear-gradient(#e7baff, #c2b6d9); */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #drop-area {
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            background: #265073;
+            text-align: center;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        #img-view {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px dashed #9AD0C2;
+            /* background: #9ad0c235; */
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #img-view img {
+            width: 100px;
+            margin-top: 50px;
+        }
+
+        #img-view p {
+            color: #fff;
+        }
+
+        .steps h3 {
+            font-size: 1.5em;
+        }
+
+        .step-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .step-flex img {
+            width: 40%;
+        }
+        .step-flex .step-text {
+            width: 35%;
+        }
+
+        .step-text p {
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        .step-text h3 {
+            font-size: 1.3em;
+        }
+
+        .step-text h4 {
+            font-size: 1.2em;
+        }
+
+        #result {
+            margin-top: 20px;
+            border: 1px solid #CCC;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #btn-container {
+            text-align: center;
+        }
+
+        #upload-btn {
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: none;
+            background-color: #265073;
+            color: #fff;
+            font-size: 1.3em;
+        }
+        /* Color palettes #265073 #2D9596 #9AD0C2 #F1FADA */
+    </style>
+</head>
+<body>
+    <div id="page">
+        <header class="header">
+            <h1>Scribble Sense</h1>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Log in</a>
+                <a href="#">Sign Up</a>
+            </nav>
+        </header>
+        <main class="main">
+            <section class="hero">
+                <h1>Advancing Handwriting Recognition for a Digital Tomorrow</h1>
+                <p>Our project employs deep learning models to precisely analyze and convert handwritten text from images, offering a versatile solution for digitalizing diverse handwritten content effortlessly.</p>
+            </section>
+
+            <div class="card">
+                <label for="imageInput" id="drop-area">
+                    <input type="file" accept="image/*" id="imageInput" hidden>
+                    <div id="img-view">
+                        <img src="/static/images/upload-2.png" alt="Upload Image Icon">
+                        <p>Drag and Drop or click here<br>to upload image</p>
+                    </div>
+                </label>
+            </div>
+            <div id="btn-container">
+                <button onclick="uploadImage()" id="upload-btn">Upload</button>
+            </div>
+            <h3>Result</h3>
+            <div id="result"></div>
+    <!-- <input type="file" id="imageInput"> -->
+            <hr>
+            <section class="hero-2">
+                <h1>How It Works</h1>
+                <p>Our project employs deep learning models to precisely analyze and convert handwritten text from images, offering a versatile solution for digitalizing diverse handwritten content effortlessly.</p>
+            </section>
+            <section class="steps">
+                <h3>Steps</h3>
+                <div class="step-flex">
+                    <div class="step-text">
+                        <h3>STEP 1</h3>
+                        <h4>Upload Your Image</h4>
+                        <p>Select or drop the files using the 'Upload File' button. It can be a scanned/non-scanned image file. Once uploaded the software would take a few seconds to process the file. After getting processed, move forward to the next step.</p>
+                    </div>
+                    <img src="/static/images/Image upload-pana.svg" alt="">
+                </div>
+                <div class="step-flex">
+                    <img src="/static/images/Designer-amico.svg" alt="">
+                    <div class="step-text">
+                        <h3>STEP 2</h3>
+                        <h4>Edit & Review</h4>
+                        <p>Once the document is processed, the software would take you to the review screen. In the review screen, you can see the extracted text at the left panel of your screen. If you find an issue with the extracted data, you can correct and fix it right there.</p>
+                    </div>
+                </div>
+                <div class="step-flex">
+                    <div class="step-text">
+                        <h3>STEP 3</h3>
+                        <h4>Convert & Download</h4>
+                        <p>Once the document is processed, the software would take you to the review screen. In the review screen, you can see the extracted text at the left panel of your screen. If you find an issue with the extracted data, you can correct and fix it right there.</p>
+                    </div>
+                    <img src="/static/images/Download-amico.svg" alt="">
+                </div>
+            </section>
+        
+            <h2>Welcome to Scribble Sense</h2>
+            <p>At Scribble Sense, we are passionate about transforming the way the world interacts with handwritten content through cutting-edge Optical Character Recognition (OCR) technology. Our journey began with a vision to bridge the gap between traditional pen-and-paper methods and the digital age, making handwritten text easily accessible and searchable.</p>
+
+            <h2>Our Mission</h2>
+            <p>At Scribble Sense, we are dedicated to delivering precision and innovation in OCR technology. Our mission is clear: to provide accurate, efficient, and innovative OCR solutions. We aim to elevate productivity, optimize processes, and unleash the complete potential of handwritten information within the dynamic framework of today's digital landscape.</p>
+
+            <h2>Our Values</h2>
+            <p>Precision: We believe in delivering OCR solutions with the utmost precision to ensure our users can trust the accuracy of their digitized content.
+
+            <p>Accessibility: Making handwritten text accessible to everyone is at the core of our values. We aim to break down barriers and facilitate seamless integration of handwritten content into digital workflows.</p>
+            
+            <p>Integrity: Trust is the foundation of our relationships—with our team, our clients, and our community. We operate with transparency, honesty, and a commitment to ethical business practices.</p>
+
+            <h6>Thank you for choosing Scribble Sense.</h6>
+        </main>
+        
+        <footer class="footer">
+            &copy; 2024 Scribble Sense
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
+    <script>
+        function uploadImage() {
+            const fileInput = document.getElementById('imageInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+    
+            const startTime = performance.now(); // Record start time
+    
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const endTime = performance.now(); // Record end time
+                const executionTime = (endTime - startTime) / 1000; // Convert to seconds
+    
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = "<h2>Text Recognition Result:</h2>";
+                data.result.forEach(detection => {
+                    resultDiv.innerHTML += ` ${detection.text}`;
+                });
+                resultDiv.innerHTML += `<p>Execution Time: ${executionTime.toFixed(2)} seconds</p>`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    
+    
+
+        const dropArea = document.getElementById("drop-area");
+        const inputFile = document.getElementById("imageInput");
+        const imgView = document.getElementById("img-view");
+
+        const scroll = new LocomotiveScroll({
+            el: document.querySelector('#page'),
+            smooth: true
+        });
+
+        inputFile.addEventListener("change", uploadImg);
+
+        function uploadImg(){
+            let imageLink = URL.createObjectURL(inputFile.files[0]);
+            imgView.style.backgroundImage= `url(${imageLink})`;
+            imgView.textContent = "";
+            // imgView.style.border = 0;
+        }
+
+        dropArea.addEventListener("dragover", function(e){
+            e.preventDefault();
+        });
+
+        dropArea.addEventListener("drop", function(e){
+            e.preventDefault();
+            inputFile.files = e.dataTransfer.files;
+            uploadImg();
+        })
+    </script>
+</body>
+</html>
